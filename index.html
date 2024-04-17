@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>calculator</title>
+	<style type="text/css">
+		*
+		{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: consolas;
+		}
+		body
+		{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background: #333;
+		}
+		.container
+		{
+			position: relative;
+			min-height: 400px;
+			min-width: 300px;
+			background: #333;
+			border-radius: 20px;
+			padding: 40px 30px 30px;
+			box-shadow: 25px 25px 75px rgba(0,0,0,0.25),10px 10px 70px rgba(0,0,0,0.25),inset -5px -5px 15px rgba(0,0,0,0.5),inset 5px 5px 15px rgba(0,0,0,0.5);
+		}
+		.calculator
+		{
+			position: relative;
+			display: grid;
+		}
+		.calculator .value
+		{
+			position: relative;
+			grid-column: span 4;
+			height: 100px;
+			width: calc(100% - 20);
+			left: 10px;
+			border: none;
+			outline: none;
+			background: #a7af7c;
+			margin-bottom: 10px;
+			border-radius: 10px;
+			box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.75);
+			text-align: right;
+			padding: 10px;
+			font-size: 2rem;
+		}
+		.calculator span
+		{
+			color: #fff;
+			position: relative;
+			display: grid;
+			width: 80px;
+			height: 80px;
+			justify-content: center;
+			align-items: center;
+			margin: 8px;
+			background: linear-gradient(180deg,#2f2f2f);
+			box-shadow:-8px 0 8px rgba(0, 0, 0, 0.15),inset -8px 0 8px rgba(0, 0, 0, 0.25),0 0 0 2px rgba(0, 0, 0, 0.75),10px 20px 25px rgba(0, 0, 0, 0.4);
+			user-select: none;
+			cursor: pointer;
+			font-size: 20px;
+			font-weight: 400;
+			border-radius: 10px;
+		}
+		.calculator span i
+		{
+			position: relative;
+			font-style: normal;
+			font-size:1.5rem ;
+			text-transform: uppercase;
+		}
+		.calculator span::before
+		{
+			content: '';
+			position: absolute;
+			top: 3px;
+			left: 4px;
+			bottom: 14px;
+			right: 12px;
+			background: linear-gradient(90deg,#2d2d2d,#4d4d4d);
+			border-radius: 10px;
+			box-shadow: -5px -5px 5px rgba(0, 0, 0, 0.1),10px 5px 10px rgba(0, 0, 0, 0.15);
+			border-left: 1px solid #0004;
+			border-bottom: 1px solid #0004;
+			border-top: 1px solid #0009;
+		}
+		.calculator span:active
+		{
+			filter: brightness(1.5);
+		}
+		.container .clear
+		{
+			grid-column: span 2;
+			width: 180px;
+			background: #f00;
+		}
+		.calculator .clear::before
+		{
+			background: linear-gradient(90deg,#d20000,#E1453D);
+			border-left: 1px solid #fff4;
+			border-bottom: 1px solid #fff4;
+			border-top: 1px solid #fff4;
+		}
+		.container .plus
+		{
+			grid-row: span 2;
+			height: 180px;
+		}
+		.container .equal
+		{
+			
+			background: #2196f3;
+		}
+		.calculator .equal::before
+		{
+			background: linear-gradient(90deg,#1479c9,#7487F3);
+			border-left: 1px solid #fff4;
+			border-bottom: 1px solid #fff4;
+			border-top: 1px solid #fff4;
+		}
+		
+	</style>
+</head>
+<body>
+<div class="container">
+	<form class="calculator" name="calc">
+		<input type="text" class="value" id="result" readonly name="txt">
+		<span class="num clear" onclick="calc.txt.value=''"><i>c</i></span>
+		<span class="num" onclick="calc.txt.value+='/'"><i>/</i></span>
+		<span class="num" onclick="calc.txt.value+='*'"><i>*</i></span>
+		<span class="num" onclick="calc.txt.value+='7'"><i>7</i></span>
+		<span class="num" onclick="calc.txt.value+='8'"><i>8</i></span>
+		<span class="num" onclick="calc.txt.value+='9'"><i>9</i></span>
+		<span class="num" onclick="calc.txt.value+='-'"><i>-</i></span>
+		<span class="num" onclick="calc.txt.value+='4'"><i>4</i></span>
+		<span class="num" onclick="calc.txt.value+='5'"><i>5</i></span>
+		<span class="num" onclick="calc.txt.value+='6'"><i>6</i></span>
+		<span class="num plus" onclick="calc.txt.value+='+'"><i>+</i></span>
+		<span class="num" onclick="calc.txt.value+='1'"><i>1</i></span>
+		<span class="num" onclick="calc.txt.value+='2'"><i>2</i></span>
+		<span class="num" onclick="calc.txt.value+='3'"><i>3</i></span>
+		<span class="num" onclick="calc.txt.value+='0'"><i>0</i></span>
+		<span class="num" onclick="calc.txt.value+='00'"><i>00</i></span>
+		<span class="num" onclick="calc.txt.value+='.'"><i>.</i></span>
+
+
+
+		<span class="num equal" onclick="document.calc.txt.value=eval(calc.txt.value)"><i>=</i></span>
+	</form>
+</div>
+<script>
+    function appendValue(value) {
+        document.getElementById('result').value += value;
+    }
+
+    function clearInput() {
+        document.getElementById('result').value = '';
+    }
+
+    function calculate() {
+        var result = document.getElementById('result').value;
+        if (result) {
+            document.getElementById('result').value = eval(result);
+        }
+    }
+
+    // Event listener for keypress
+    document.addEventListener('keydown', function(event) {
+        const key = event.key;
+        if (key.match(/[0-9+\-*/.=]|Enter/)) {
+            if (key === 'Enter') {
+                calculate();
+            } else {
+                appendValue(key);
+            }
+        } else if (key === 'Escape') {
+            clearInput();
+        } else if (key === 'Backspace') {
+            // Remove the last character from input
+            var input = document.getElementById('result').value;
+            document.getElementById('result').value = input.slice(0, -1);
+        } else if (event.ctrlKey && key === 'i') {
+            // Open a new window with the same calculator
+            window.open(window.location.href, "_blank", "width=700,height=700,left=" + (screen.width - 700) / 2 + ",top=" + (screen.height - 700) / 2);
+        }
+    });
+</script>
+</body>
+</html>
